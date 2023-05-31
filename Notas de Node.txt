@@ -1,34 +1,56 @@
-package.json
+Node.
+Node es solo un entorno JavaScript, tambien se puede decir que es un motor de JS.
 
-Es el corazon de los proyectos de node o paquete npm, dado a que
-Sirve para almacenar metadatos sobre el proyecto y 
-gestionar las dependencias del mismo.
+Enrutamiento con la Express
+Es necesario crear una instancia de Express usualmente se le llama app.
+Por lo general las rutas en express siguen el siguiente formato:
+    'app.METHOD(PATH, HADLER)', donde.
 
-Cuando clonamos un proyecto de node o paqute npm a nuestro ordenado
-es necesario ademas de tener node instalado, ejecurar el comando:
+    app: es una instancia de la aplicación Express.
+    METHOD: es un método HTTP, como GET, POST, PUT, DELETE, etc.
+    PATH: es la ruta URL en la que se realizará la solicitud.
+    HANDLER: es una función de controlador que se ejecuta cuando se realiza una solicitud a la ruta especificada.
+        Parametros de HANDLER.
 
-"npm install" -> para instalar las dependencias del proyecto que se encuentran en package.json
+        ==> req: representa la solicitud entrante, dado a que contienen información sobre esta como son los sig:
+            => req.params: Un objeto que contiene los parámetros de la ruta definidos en la URL.
+            => req.query: Un objeto que contiene los parámetros de consulta (query parameters) de la URL.
+            => req.body: Un objeto que contiene los datos enviados en el cuerpo de la solicitud (por ejemplo, cuando se envía un formulario).
+            => req.headers: Un objeto que contiene los encabezados de la solicitud.
 
-Dentro de este mismo en la seccion de scripts tambien dene tener el comando, para 
-poder ejecutar el proyecto en este caso esta de la sig manera:
-    "start": "node server.js" -> solo con el comando "node server.js", podemos echarlo andar.
+        ==> res: representa la respuesta saliente, dado que podemos envar respuestas al cliente como las siq:
+            => res.send(): Envía una respuesta de texto o HTML al cliente.  
+            => res.json(): Envía una respuesta en formato JSON al cliente.
+            => res.status(): Establece el código de estado de la respuesta HTTP.
+            => res.redirect(): Redirige al cliente a otra URL.
+            => res.sendFile(): Envía un archivo al cliente.
 
-Ahora bien si queremos CREAR un proyecto en node, solo se requerira del comando:
-    "npm init"
-y se creara el proyecto y con:
-    "npm install nameDependence "-> podremos instalar cualquier dependencia 
+    Ejemplos:
+
+    app.get('/', function(req, res) {
+        res.send('Hola Mundo'); //=> con esta funcion enviamos la cadena al cliente 
+    });
+
+    app.get('/users/:id',(req, res){
+        let userId = req.params.id;
+        res.send('tu Id es ${userId}');
+    });
 
 
+Herramientas utiles
+    Con la variable global de Node __dirname para calcular la ruta como esta:
+        absolutePath = __dirname + '/views/index.html' 
+    ya solo es cuestion de pasarla por el send.
 
-Elementos del package.json:
 
-    keywords : Son palabras clave mismas que son útiles para categorizar y clasificar el proyecto, 
-    y pueden ser utilizadas por herramientas de búsqueda, repositorios de paquetes y otros sistemas 
-    de indexación.
+Archivos estaticos o Recursos estaticos con "express.static".
+    Es una funcion(Middleware) que se utiliza para servir archivos estáticos, como imágenes, 
+    archivos CSS o JavaScript, en una aplicación web.
+    Si solo hacemos referencia a los archivos estaticos que estan en public, estos no 
+    se cargaran es obligatorio usar esta funcion en cierta manera.
 
-    Licencia: No es obligatorio pero para protejer con derechos de autor debemos poner nuestra licencias
-
-    "version": No es obligatorio pero es para definir la version en la que se encuentra nuesto proyecto.
-
-    
+    USO:
+        app.use(express.static('public')); //=> public: es la direccion de los static sources
+    USO DESDE HTML:
+        <link rel="stylesheet" href="style.css"> //=> ya solo es necesario indicar el nombre del archivo y no la ruta 
 

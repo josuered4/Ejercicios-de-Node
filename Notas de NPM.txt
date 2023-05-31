@@ -1,0 +1,64 @@
+package.json
+
+Es el corazon de los proyectos de node o paquete npm, dado a que
+Sirve para almacenar metadatos sobre el proyecto y 
+gestionar las dependencias del mismo.
+
+Cuando clonamos un proyecto de node o paqute npm a nuestro ordenado
+es necesario ademas de tener node instalado, ejecurar el comando:
+
+"npm install" -> para instalar las dependencias del proyecto que se encuentran en package.json
+
+Dentro de este mismo en la seccion de scripts tambien dene tener el comando, para 
+poder ejecutar el proyecto en este caso esta de la sig manera:
+    "start": "node server.js" -> solo con el comando "node server.js", podemos echarlo andar.
+
+Ahora bien si queremos CREAR un proyecto en node, solo se requerira del comando:
+    "npm init"
+y se creara el proyecto y con:
+    "npm install nameDependence "-> podremos instalar cualquier dependencia 
+
+
+
+Elementos del package.json:
+
+    keywords : Son palabras clave mismas que son útiles para categorizar y clasificar el proyecto, 
+    y pueden ser utilizadas por herramientas de búsqueda, repositorios de paquetes y otros sistemas 
+    de indexación.
+
+    Licencia: No es obligatorio pero para protejer con derechos de autor debemos poner nuestra licencias
+
+    "version": No es obligatorio pero es para definir la version en la que se encuentra nuesto proyecto.
+
+    
+Gestiona dependencias npm entendiendo versionado semántico.
+
+    Cada numero del versionamiento de las dependencias tiene un por que.
+
+    La versión MAJOR debe incrementarse cuando hagas cambios de API incompatibles. 
+    La versión MINOR debe incrementarse cuando añadas funcionalidades de forma compatible 
+    con versiones anteriores. 
+    La versión de PATCH debe incrementarse cuando realices correcciones de errores compatibles
+    con versiones anteriores. 
+    Finalmente, los MAJORs añaden cambios que no funcionarán con versiones anteriores.
+
+    Ejemplo:
+
+    En la sección de dependencias de package.json, cambie la versión de @freecodecamp/example 
+    para que coincida con MAJOR versión 1, la MINOR versión 2 y PATCH versión 13
+
+    "@freecodecamp/example" debería tener la versión "1.2.13".
+
+Actualizacion autimatica de dependencias:
+    Indicar una version de dependencias asi a secas hace que sea una version estatica, pero 
+    si queremos una Actualizacion automatica debemos agregar los siguientes caracteres.
+
+    Tilde: Solo para actualizaciones de PATCH.
+    "package": "~1.3.8"
+
+    caret: Para actualizaciones de Minor como PATCH
+    "package": "^1.3.8"
+
+ELIMINAR DEPENDENCIAS.
+Para eliminar una dependencia solo de debe de retirar el package.json y listo.
+//"@freecodecamp/example": "^1.3.8"
