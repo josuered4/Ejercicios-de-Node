@@ -36,6 +36,10 @@ Por lo general las rutas en express siguen el siguiente formato:
         res.send('tu Id es ${userId}');
     });
 
+    app.get("/json/",(req, res)=>{
+        res.json({"message": "Hello json"});
+    });
+
 
 Herramientas utiles
     Con la variable global de Node __dirname para calcular la ruta como esta:
@@ -54,3 +58,18 @@ Archivos estaticos o Recursos estaticos con "express.static".
     USO DESDE HTML:
         <link rel="stylesheet" href="style.css"> //=> ya solo es necesario indicar el nombre del archivo y no la ruta 
 
+
+
+Variables de Entorno y el archivo .env:
+    El archivo .env es un archivo oculto que se utiliza para pasar variables de entorno a la aplicación.
+    Este archivo es secreto, solamente tú puedes acceder a él, y puede ser utilizado para almacenar datos
+    que desees mantener privados u ocultos. Por ejemplo, puedes almacenar claves de APIs de servicios externos 
+    o la URI de tu base de datos. También puedes usarlo para guardar opciones de configuración. 
+
+    Para acceder a este archivo es necesario tener intalado la libreria de "dotenv" y junto a esto 
+    importarla de la siguiente forma.
+
+    require('dotenv').config(); //=> importamos el archivo.
+
+    Ahora para llamar a la variable se hace de la siguiente manera:
+        process.env.NOMBRE_DE_VARIABLE //=>por convencion el nombre de las variables del .env estan en SNAKE_UPPER_CASE
