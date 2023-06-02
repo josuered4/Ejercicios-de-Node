@@ -73,3 +73,85 @@ Variables de Entorno y el archivo .env:
 
     Ahora para llamar a la variable se hace de la siguiente manera:
         process.env.NOMBRE_DE_VARIABLE //=>por convencion el nombre de las variables del .env estan en SNAKE_UPPER_CASE
+
+
+Implementación de Middleware.
+    Son funciones que se ejecutan en el flujo de solicitud y respuesta de una aplicación, 
+    estos son responsables de procesar y transformar los datos de las solicitudes HTTP antes 
+    de que lleguen a la ruta funal o de realizar acciones adicionales despues de que se haya 
+    enviado la respuesta.
+
+    Son basicamente funciones que interceptan los manejadores de rutas, añadiendo algun tipo de información.
+
+    Los Middlewares se utilizam para realizar tareas como:
+
+        - Procesamiento de datos: leer o manipular antes de pasarlos a la funcion de Procesamiento, 
+        esto nos permite hacer validaciones.
+
+        - Autenticacion y Autorizacion: tambien son utilizados para identificar la identidad de los 
+        usuarios, validar token, verificar permisos y realizar acciones de seguridad.
+
+        - Gestion de Errores: se pueden capturar errores y enviar respuestas adecuadas al cliente en caso
+        de que ocurra un error durante el procesamiento de la solicitud.
+
+        - Registro y seguimiento de solicitudes y respuestas, permitiendo llevar un registro de las acciones 
+        realizadas y facilitando la depuración.
+
+
+    Partes de un Middleware en Node.
+        Al igual que la funciones de Enrutamiento o Controladores, los Middleware pueden acceder al req y res, 
+        con execepcion que tiene un 3er parametro "Next", ejemplo.
+
+        function myMiddleware(req, res, next) {
+            console.log("I'm a middleware...");
+            next();
+        }
+
+        next ==> una función que indica que el middleware ha terminado y debe pasar al siguiente middleware o ruta, 
+        es importante no olvidar esta funcion, de lo contrario el servidor permanecera bloqueado.
+
+
+    Implementación de Middleware.
+        Al igual que "express.static" es necesario motarlo dentro del proyecto y esto se hace con el metodo use de express.
+            - app.use(miMiddleware);
+            Es importante saber que el orden de las funciones si afecta en este caso, al se un legueje de interprete.
+        Tambien puede montar un middleware en una ruta especifica, esto seria llamando la funcion del middleware en lugar 
+        de la funcion HADLER.
+    
+    Datos importantes.
+        Desde un middleware puedes modificar el objero "req", como por ejemplo añadiendo nuevos datos, para despues desde 
+        el HADLER acceder a ellos, por ejemplo.
+        app.get("/now",(req, res, next) => {
+                req.string = "example"; //=> creamos una nueva propiedad
+                next();
+            },
+            (req, res) => {
+                res.send(req.string); //=> accedemos a ella desde el HADLER
+            });
+
+
+    Notas de implementacion. //Informacion no validada por el momento.  
+        implementar un middleware de la forma anterior hace que se implemente en todas la rutas anteriores,
+        pero si quieremos que solo se aplique en ciertas rutas que cumplan con un method especifico debemos 
+        especificarlo, por ejemplo.
+            app.POST(miMiddleware);
+            app.GET(miMiddleware);
+
+
+
+OBTENCION DE DATOS DEL CLIENTE.
+
+    Entrada de parámetros de ruta del cliente.
+        Es la primera form aque vimos como se envian los datos, con un orden en los Parametros:
+            route_path: '/user/:userId/book/:bookId'
+            actual_request_URL: '/user/546/book/6754'
+        
+    Entrada de parámetros de consulta del cliente:
+        La cadena de consulta está delimitada por un signo de interrogación (?), e incluye 
+        parejas de campo=valor. Express puede analizar los datos de la cadena de consulta, 
+        y llenar el objeto req.query. Algunos caracteres, como el porcentaje (%), no pueden
+         estar en URLs.
+
+        Ejemplos:
+        route_path: '/library'
+        actual_request_URL: '/library?userId=546&bookId=6754'
